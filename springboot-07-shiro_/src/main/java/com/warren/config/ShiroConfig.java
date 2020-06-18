@@ -5,11 +5,13 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Configuration
 public class ShiroConfig {
 
     // ShiroFilterFactoryBean:3
@@ -29,9 +31,11 @@ public class ShiroConfig {
         * */
 
         Map<String, String> filterMap = new LinkedHashMap<String,String>();
-        filterMap.put("/user/add","authc");
-        filterMap.put("/user/update","authc");
+        filterMap.put("/user/*","authc");
         bean.setFilterChainDefinitionMap(filterMap);
+
+        // 设置登录的请求
+        bean.setLoginUrl("/toLogin");
 
         return bean;
     }
