@@ -33,6 +33,14 @@ public class ShiroController {
     public String toLogin(){
         return "login";
     }
+
+    @RequestMapping("/toLogout")
+    public String toLogout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "index";
+    }
+
     @RequestMapping("/login")
     public String login(String username,String password,Model model){
         // 获取当前的用户
@@ -50,5 +58,11 @@ public class ShiroController {
             model.addAttribute("msg","密码错误");
             return "login";
         }
+    }
+
+    @RequestMapping("/unauthorized")
+    @ResponseBody
+    public String unauthorized(){
+        return "当前用户未被授权此权限！";
     }
 }

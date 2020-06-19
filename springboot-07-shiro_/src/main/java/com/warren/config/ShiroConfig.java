@@ -1,6 +1,7 @@
 package com.warren.config;
 
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,13 +30,21 @@ public class ShiroConfig {
         *   perms: 拥有对某个资源的权限才可以访问
         *   role: 拥有某个角色权限才可以访问
         * */
-
+        // 拦截
         Map<String, String> filterMap = new LinkedHashMap<String,String>();
+
+        // 授权: 正常情况下，没有授权会跳转到未授权的页面
+        filterMap.put("/user/add","perms[user:add]");
+        filterMap.put("/user/update","perms[user:update]");
+
         filterMap.put("/user/*","authc");
         bean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登录的请求
         bean.setLoginUrl("/toLogin");
+
+        // 未授权页面
+        bean.setUnauthorizedUrl("/unauthorized");
 
         return bean;
     }
@@ -53,5 +62,11 @@ public class ShiroConfig {
     @Bean
     public UserRealm userRealm(){
         return new UserRealm();
+    }
+
+    // 整合ShiroDialect: 用来整合shiro thymeleaf
+    @Bean
+    public ShiroDialect getShiroDialect(){
+        return new ShiroDialect();
     }
 }

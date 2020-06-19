@@ -5,6 +5,22 @@ public class User {
     private int id;
     private String name;
     private String pwd;
+    private String perms;
+
+    public String getPerms() {
+        return perms;
+    }
+
+    public User(int id, String name, String pwd, String perms) {
+        this.id = id;
+        this.name = name;
+        this.pwd = pwd;
+        this.perms = perms;
+    }
+
+    public void setPerms(String perms) {
+        this.perms = perms;
+    }
 
     public User(int id, String name, String pwd) {
         this.id = id;
@@ -45,6 +61,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", pwd='" + pwd + '\'' +
+                ", perms='" + perms + '\'' +
                 '}';
     }
 }
