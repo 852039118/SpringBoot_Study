@@ -11,8 +11,6 @@
     <groupId>com.warren</groupId>
     <artifactId>springboot-09-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <!-- 这里打成war包 若打jar，需将war改为jar -->
-    <packaging>war</packaging>
     <name>springboot-09-test</name>
     <description>Demo project for Spring Boot</description>
 
@@ -37,8 +35,6 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.72</version>
         </dependency>
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -52,13 +48,13 @@
         </dependency>
     </dependencies>
 
-<!--    <build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>-->
+    </build>
 
 </project>

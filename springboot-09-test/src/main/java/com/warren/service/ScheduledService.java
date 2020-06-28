@@ -108,7 +108,8 @@ public class ScheduledService {
         mailService.sendMail(from,to,subject,content, true);
     }*/
 
-    @Scheduled(cron = "* 0/30 * 28 6 ?")
+//    @Scheduled(cron = "* 0/30 * 28 6 ?")
+    @Scheduled(cron = "0 0/30 * 28 6 ?")
     public void scheduledTest1() throws MessagingException {
 //        System.out.println("每隔10秒发送一次");
         this.initEveryday();
