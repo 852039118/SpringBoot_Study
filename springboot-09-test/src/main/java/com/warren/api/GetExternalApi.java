@@ -3,7 +3,6 @@ package com.warren.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonAlias;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -14,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
-* 网易云热评(JSONObject): http://localhost:3000/comment/hotwall/list
+* 网易云热评(JSONObject): http://warren.run:3000/comment/hotwall/list (每日更新30条,好像是当天被回复最多的评论？因为我点进去看被回复了炒鸡多)
 * 网易云热评(JSONObject): http://140.143.128.100:3000/comment/hotwall/list
 * 今日诗词(String)：https://v1.jinrishici.com/rensheng.txt
 * 词霸每日一句(JSONObject)：http://sentence.iciba.com/index.php?c=dailysentence&m=getdetail&title=2020-06-28
@@ -22,7 +21,6 @@ import java.util.Map;
 
 @Component
 public class GetExternalApi {
-
     //获取外部接口返回的整体数据 2020/6/28 By Warren
     public String getData(String url){
         //先调用下忽略https证书的再请求才可以
@@ -41,7 +39,7 @@ public class GetExternalApi {
         return getData("https://v1.jinrishici.com/rensheng.txt");
     }
 
-    // 每日 网易云热评 7.1日 待改
+    // 每日 网易云热评
     public JSONObject getNetMusicContent(String url){
         String body = getData(url);    // "http://localhost:3000/comment/hotwall/list"
 
@@ -50,21 +48,20 @@ public class GetExternalApi {
         // 获取数据data 转为JSON对象数组
         JSONArray data = jsonObject.getJSONArray("data");
         // 获取 日
-        Date date = new Date();
-        int day = date.getDate();
-        int month = date.getMonth();
-        // 需要修改
-        if (month == 5){
-            day -= 28;
-        }
-        else if(month == 6){
-            day += 1;
-        }
-        else{
+//        Date date = new Date();
+//        int day = date.getDate();
+
+        // day: [1,31], JSONArray:[0,29]
+        // 根据日期获取
+/*
+        if (day > 30){
+            day -= 2;
+        }else{
             day -= 1;
         }
+*/
         // 获取指定对象
-        JSONObject jsonObject1 = data.getJSONObject(day);
+        JSONObject jsonObject1 = data.getJSONObject(5); //day
         // 获取评论内容
         String content = jsonObject1.getString("content");
         // 用户信息
@@ -119,6 +116,11 @@ public class GetExternalApi {
     public JSONObject getPowerWord(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = simpleDateFormat.format(new Date());
+        // 这天临时发了两条 防止重复
+        if (date.equals("2020-07-17")){
+            date = "2019-06-13";
+        }
+        System.out.println(date);
         return getPowerWord("http://sentence.iciba.com/index.php?c=dailysentence&m=getdetail&title=" + date);
     }
 

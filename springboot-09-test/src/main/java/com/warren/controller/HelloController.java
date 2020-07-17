@@ -16,6 +16,6 @@ public class HelloController {
 
         asyncService.hello();
 
-        return "Success";
+        return "Success 2020/7/17版本";
     }
 }

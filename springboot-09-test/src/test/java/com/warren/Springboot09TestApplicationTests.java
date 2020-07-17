@@ -26,7 +26,7 @@ import java.util.Map;
 
 @SpringBootTest
 class Springboot09TestApplicationTests {
-    @Autowired
+ /*   @Autowired
     JavaMailSenderImpl mailSender;
     @Autowired
     ScheduledService scheduledService;
@@ -35,7 +35,7 @@ class Springboot09TestApplicationTests {
     @Autowired
     GetExternalApi verseApi;
 
-/*    @Test
+    @Test
     void contextLoads() {
         //邮件设置1：一个简单的邮件
         SimpleMailMessage mailMessage = new SimpleMailMessage();
