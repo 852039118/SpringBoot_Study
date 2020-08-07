@@ -32,7 +32,7 @@ public class GetExternalApi {
         ResponseEntity<String> responseEntity=restTemplate.getForEntity(url,String.class,params);
         // 获取响应体
         String body = responseEntity.getBody();
-        System.out.println(body);
+//        System.out.println(body);
         return body;
     }
     public String getData(){
@@ -61,7 +61,7 @@ public class GetExternalApi {
         }
 */
         // 获取指定对象
-        JSONObject jsonObject1 = data.getJSONObject(5); //day
+        JSONObject jsonObject1 = data.getJSONObject(14); //day
         // 获取评论内容
         String content = jsonObject1.getString("content");
         // 用户信息
@@ -102,8 +102,8 @@ public class GetExternalApi {
         // 获取中文内容
         String note = jsonObject.getString("note");
 
-        System.out.println(content);
-        System.out.println(note);
+        System.out.println(content.toCharArray());
+        System.out.println(note.toCharArray());
 
         JSONObject returnJson = new JSONObject();
 
@@ -116,10 +116,6 @@ public class GetExternalApi {
     public JSONObject getPowerWord(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date = simpleDateFormat.format(new Date());
-        // 这天临时发了两条 防止重复
-        if (date.equals("2020-07-17")){
-            date = "2019-06-13";
-        }
         System.out.println(date);
         return getPowerWord("http://sentence.iciba.com/index.php?c=dailysentence&m=getdetail&title=" + date);
     }

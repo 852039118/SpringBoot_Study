@@ -22,19 +22,28 @@ public class ScheduledService {
     GetExternalApi everyData;
 
     // 初始化每日数据
-    void initEveryday(){
+    void initEveryday() throws Exception {
         subject = new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + " Happy~";
         // 如果接口访问失败，就用我写的诗吧 :)
+/*      2020-07-28
         String verse = "盛年不重来，一日难再晨。花有重开日，人无再少年！" ;
-        String name = "孤独的总和";
         String musicContent = "我不是失眠了，只是被什么勾起回忆了。我不是记性越来越差了，可能它存着重要的东西腾不出位置。";
         String nickname = "Warren";
+        String name = "孤独的总和";
         String wordContent = "Follow Excellence. Success will chase you.";
-        String note = "追求卓越,成功就会在不经意间追上你。";
+        String note = "追求卓越,成功就会在不经意间追上你。";*/
+        String verse = "心若自由，身沐长风。一念天堂，一念地狱。" ;
+        String musicContent = "人活一世, 值得爱的东西很多  不要因为某一个不满意就灰心  即使生活有一千个理由让你哭  你也要找到一个理由让自己笑  我是个悲观的人, 很容易被生活击垮  也是个乐观的人, 一点小小的温暖就能重新燃起对生活的希望";
+        // 夏天太浪漫了 我想请它吃顿饭 如果你有空 也可以一起来
+        String nickname = "君若一盏清茗";
+        String name = "愿你温柔且有力量";
+        String wordContent = "Being surrounded by the wrong people is the loneliest thing in the world.";
+        String note = "被错误的人围绕着才是世上最孤独的事。";
+
         try {
             // 调用接口获取今日返回的JSON对象数据
-            JSONObject music = everyData.getNetMusicContent();
             JSONObject powerWord = everyData.getPowerWord();
+            JSONObject music = everyData.getNetMusicContent();
             // 网易云音乐评论数据
             name = music.getString("name");
             musicContent = music.getString("content");
@@ -47,6 +56,8 @@ public class ScheduledService {
             verse = everyData.getData();
         }catch (Exception e){
             e.printStackTrace();
+            //抛出异常后，就不会继续执行后面了
+//            throw new Exception(e.getMessage());
         }
 
         // 组装 邮件HTML
@@ -89,13 +100,13 @@ public class ScheduledService {
                 "        <p>\n" +
                 "            <b><i>\n" +
                 wordContent +
+                "<br>\n" +
+                note +
                 "            </i></b>\n" +
                 "        </p>\n" +
-                "        <b><i>\n" +
-                note +
-                "        </i></b>\n" +
                 "    </div>\n" +
                 "</div>";
+//        System.out.println(content);
     }
 
     // Cron表达式
@@ -108,14 +119,14 @@ public class ScheduledService {
     }*/
 
     @Scheduled(cron = "0 0 23 * * ?")
-    public void evening() throws MessagingException {
+    public void evening() throws Exception {
         this.initEveryday();
         mailService.sendMail(from,"1377818125@qq.com",subject,content, true);
         mailService.sendMail(from,to,subject,content, true);
     }
 
 /*    @Scheduled(cron = "0/30 * * * * ?")
-    public void scheduledTest() throws MessagingException {
+    public void scheduledTest() throws Exception {
 //        System.out.println("每隔30秒发送一次");
         this.initEveryday();
         mailService.sendMail(from,to,subject,content, true);
@@ -128,8 +139,8 @@ public class ScheduledService {
 //        mailService.sendMail(from,to,subject,content, true);
 //    }
 
-    @Scheduled(cron = "0 59 16 17 7 ?")
-    public void uploadTest() throws MessagingException {
+    @Scheduled(cron = "0 25 17 7 8 ?")
+    public void uploadTest() throws Exception {
         this.initEveryday();
         mailService.sendMail(from,to,subject,content, true);
     }
