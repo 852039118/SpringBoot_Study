@@ -61,7 +61,7 @@ public class GetExternalApi {
         }
 */
         // 获取指定对象
-        JSONObject jsonObject1 = data.getJSONObject(5); //day
+        JSONObject jsonObject1 = data.getJSONObject(13); //day
         // 获取评论内容
         String content = jsonObject1.getString("content");
         // 用户信息

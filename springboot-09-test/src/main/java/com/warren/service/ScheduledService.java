@@ -108,31 +108,31 @@ public class ScheduledService {
     }*/
 
     @Scheduled(cron = "0 0 23 * * ?")
-    public void evening() throws MessagingException {
+    public void evening() throws Exception {
         this.initEveryday();
         mailService.sendMail(from,"1377818125@qq.com",subject,content, true);
         mailService.sendMail(from,to,subject,content, true);
     }
 
-/*    @Scheduled(cron = "0/30 * * * * ?")
-    public void scheduledTest() throws MessagingException {
+    @Scheduled(cron = "0/30 * * * * ?")
+    public void scheduledTest() throws Exception {
 //        System.out.println("每隔30秒发送一次");
+        this.initEveryday();
+        mailService.sendMail(from,to,subject,content, true);
+    }
+
+  // 隔半小时一次
+/*    @Scheduled(cron = "0 0/30 * 28 6 ?")
+    public void scheduledTest1() throws Exception {
         this.initEveryday();
         mailService.sendMail(from,to,subject,content, true);
     }*/
 
-  // 隔半小时一次
-//    @Scheduled(cron = "0 0/30 * 28 6 ?")
-//    public void scheduledTest1() throws MessagingException {
-//        this.initEveryday();
-//        mailService.sendMail(from,to,subject,content, true);
-//    }
-
-    @Scheduled(cron = "0 59 16 17 7 ?")
-    public void uploadTest() throws MessagingException {
+    /*@Scheduled(cron = "0 59 16 17 7 ?")
+    public void uploadTest() throws Exception {
         this.initEveryday();
         mailService.sendMail(from,to,subject,content, true);
-    }
+    }*/
 }
 
 /*
