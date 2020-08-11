@@ -3,6 +3,8 @@ package com.warren.api;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.warren.model.NetMusic;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -21,6 +23,10 @@ import java.util.Map;
 
 @Component
 public class GetExternalApi {
+
+    @Autowired
+    NetMusic netMusic;
+
     //获取外部接口返回的整体数据 2020/6/28 By Warren
     public String getData(String url){
         //先调用下忽略https证书的再请求才可以
@@ -47,21 +53,8 @@ public class GetExternalApi {
         JSONObject jsonObject = JSON.parseObject(body);
         // 获取数据data 转为JSON对象数组
         JSONArray data = jsonObject.getJSONArray("data");
-        // 获取 日
-//        Date date = new Date();
-//        int day = date.getDate();
-
-        // day: [1,31], JSONArray:[0,29]
-        // 根据日期获取
-/*
-        if (day > 30){
-            day -= 2;
-        }else{
-            day -= 1;
-        }
-*/
         // 获取指定对象
-        JSONObject jsonObject1 = data.getJSONObject(14); //day
+        JSONObject jsonObject1 = data.getJSONObject(netMusic.getIndex()); // 在配置文件中配置的全局变量
         // 获取评论内容
         String content = jsonObject1.getString("content");
         // 用户信息
